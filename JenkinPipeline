@@ -1,0 +1,32 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/boss2412/Jenkins.git'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                bat 'javac HelloWorld.java'
+            }
+        }
+
+        stage('Test and Run') {
+            steps {
+                bat 'java HelloWorld'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline succeeded!'
+        }
+        failure {
+            echo 'Pipeline failed!'
+        }
+    }
+}
